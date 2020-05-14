@@ -22,7 +22,7 @@ stages:
     jobs:
       - job: 'build'
         steps:
-          - script: 'dotnet build'
+          - script: dotnet build 'pipelineDemo/pipelineMvcDemo.csproj'
           - script: echo "Hey there $(instructor)!"
 
       - job: 'test'
