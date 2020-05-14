@@ -7,10 +7,10 @@
 trigger:
   - 'master'
 
-Pool: 'ubuntu-latest'
+pool: 'ubuntu-latest'
 
 variables:
-- name: 'intructor' 
+- name: 'instructor' 
   value: 'Mark'
 #watch for PR's
 pr: 'none'
