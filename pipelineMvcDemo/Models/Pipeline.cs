@@ -11,6 +11,8 @@ namespace pipelineMvcDemo.Models
         public int Width { get; set; }
         public int Throughput { get; set; }
         public int Depth { get; set; }
+        public string Name { get; set; }
+
 
 
 
