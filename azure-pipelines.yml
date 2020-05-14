@@ -22,6 +22,7 @@ stages:
     jobs:
       - job: 'build'
         steps:
+        #remember, paths are relative to where the YAML file is.
           - script: dotnet build 'pipelineMvcDemo/pipelineMvcDemo.csproj'
           - script: echo "Hey there $(instructor)!"
 
