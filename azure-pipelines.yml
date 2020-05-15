@@ -16,7 +16,7 @@ variables:
 - name: 'sdkVersion'
   value: '3.1.x'
 - name: 'solutionPath'
-  value: 'pipelineMvcDemo'
+  value: 'pipelineMvcDemo/pipelineMvcDemo.csproj'
 - name: 'buildConfiguration' 
   value: 'Release'
 
