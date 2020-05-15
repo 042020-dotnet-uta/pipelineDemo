@@ -25,9 +25,9 @@ pr: 'none'
 
 #groups sequential actions
 stages:
-  - stage:
+  - stage: 'build'
     jobs:
-      - job: 'build'
+      - job: 'buildjob'
     
         pool: 
           vmImage: 'ubuntu-latest'
