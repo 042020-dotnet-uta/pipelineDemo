@@ -157,7 +157,7 @@ stages:
                 deployToSlotOrASE: true
                 ResourceGroupName: 'MarkMooreResourceGroup'
                 SlotName: 'production'
-                packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+                packageForLinux: '$(Pipeline.Workspace)/app'
 
 name: '$(date:yyyyMMdd)$(rev:rr)'
 
