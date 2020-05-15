@@ -31,10 +31,34 @@ stages:
     
         pool: 
           vmImage: 'ubuntu-latest'
+        
         steps:
+
+        - task: UseDotNet@2
+          inputs:
+            packageType: sdk
+            version: $(sdkVersion)
+          displayName: dotnet $(sdkVersion)
+
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: publish
+            publishWebProjects: true
+            arguments:
+              --configuration $(buildConfiguration)
+              --output $(Build.ArtifactStagingDirectory)/app
+            modifyOutputPath: false
+            zipAfterPublish: false
+          displayName: dotnet publish
+
+        - publish: $(Build.ArtifactStagingDirectory)/app
+          artifact: app
+          displayName: artifact publish app
+
+
         #remember, paths are relative to where the YAML file is.
-          - script: dotnet build 'pipelineMvcDemo/pipelineMvcDemo.csproj'
-          - script: echo "Hey there $(instructor)!"
+        - script: dotnet build 'pipelineMvcDemo/pipelineMvcDemo.csproj'
+        - script: echo "Hey there $(instructor)!"
 
       - job: test
 
@@ -49,6 +73,7 @@ stages:
               version: 3.1.x
             displayName: dotnet 3.1.x
           
+
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: 'pipelineDemo'
