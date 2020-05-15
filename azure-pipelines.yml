@@ -148,16 +148,25 @@ stages:
               displayName: artifact download app
 
             #- job: 'publish'
+            # - task: AzureRmWebAppDeployment@4
+            #   inputs:
+            #     ConnectionType: 'AzureRM'
+            #     azureSubscription: 'Azure subscription 1(5d150957-9944-40b9-b9e9-2a32c983a1f8)'
+            #     appType: 'webApp'
+            #     WebAppName: 'pipelineDemo11'
+            #     deployToSlotOrASE: true
+            #     ResourceGroupName: 'MarkMooreResourceGroup'
+            #     SlotName: 'production'
+            #     packageForLinux: '$(Pipeline.Workspace)/app'
+
             - task: AzureRmWebAppDeployment@4
               inputs:
                 ConnectionType: 'AzureRM'
                 azureSubscription: 'Azure subscription 1(5d150957-9944-40b9-b9e9-2a32c983a1f8)'
                 appType: 'webApp'
                 WebAppName: 'pipelineDemo11'
-                deployToSlotOrASE: true
-                ResourceGroupName: 'MarkMooreResourceGroup'
-                SlotName: 'production'
                 packageForLinux: '$(Pipeline.Workspace)/app'
+
 
 name: '$(date:yyyyMMdd)$(rev:rr)'
 
