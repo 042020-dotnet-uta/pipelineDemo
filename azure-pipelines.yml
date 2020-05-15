@@ -20,14 +20,16 @@ stages:
           vmImage: 'ubuntu-latest'      
         steps:
 
-#what is this doing?
+#.NET build this downloads the correct SDK version for your build. 
         - task: UseDotNet@2
           inputs:
-            packageType: sdk
-            version: $(sdkVersion)
-          displayName: dotnet $(sdkVersion)
+            packageType: 'sdk'
+            version: '$(sdkVersion)'
+          displayName: 'dotnet $(sdkVersion)'
 
-#what is this doing?
+#.NET Publish with arguments for the configuration
+#this will build, create and store an artifact to 
+#be retrieved by the deploy stage.
         - task: DotNetCoreCLI@2
           inputs:
             command: publish
@@ -39,6 +41,8 @@ stages:
             zipAfterPublish: false
           displayName: dotnet publish
 
+#not sure what this is. I thknk it creates the artifact to be retrieved later
+#is there a template in the task manager for this?
         - publish: $(Build.ArtifactStagingDirectory)/app
           artifact: app
           displayName: artifact publish app
