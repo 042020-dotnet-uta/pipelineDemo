@@ -6,14 +6,10 @@ pr: 'none'
 pool: 
   vmImage: 'ubuntu-latest'
 variables:
-- name: 'instructor' 
-  value: 'Mark'
-- name: 'sdkVersion'
-  value: '3.1.x'
-- name: 'solutionPath'
-  value: 'pipelineMvcDemo/pipelineMvcDemo.csproj'
-- name: 'buildConfiguration' 
-  value: 'Release'
+  instructor: 'Mark'
+  sdkVersion: '3.1.x'
+  solutionPath: 'pipelineMvcDemo/pipelineMvcDemo.csproj'
+  buildConfiguration: 'Release'
 
 #stages group sequential actions
 stages:
@@ -31,7 +27,7 @@ stages:
             version: $(sdkVersion)
           displayName: dotnet $(sdkVersion)
 
-#what is thisd doing?
+#what is this doing?
         - task: DotNetCoreCLI@2
           inputs:
             command: publish
