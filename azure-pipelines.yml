@@ -154,6 +154,9 @@ stages:
                 azureSubscription: 'Azure subscription 1(5d150957-9944-40b9-b9e9-2a32c983a1f8)'
                 appType: 'webApp'
                 WebAppName: 'pipelineDemo11'
+                deployToSlotOrASE: true
+                ResourceGroupName: 'MarkMooreResourceGroup'
+                SlotName: 'production'
                 packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 name: '$(date:yyyyMMdd)$(rev:rr)'
