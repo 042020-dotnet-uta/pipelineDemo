@@ -54,7 +54,7 @@ stages:
               SonarCloud: 'pipelineDemo'
               organization: '042020-dotnet-uta'
               scannerMode: 'MSBuild'
-              projectKey: '042020-dotnet-uta'
+              projectKey: '042020-dotnet-uta'#this name may not matter or it may need to be changed. 
           - task: UseDotNet@2
             inputs:
               packageType: sdk
@@ -97,6 +97,7 @@ stages:
             condition: succeededOrFailed()
             displayName: sonarcloud results build publish
 
+#now publish....................
       - job: 'publish'
         dependsOn: 'test'
         steps:
