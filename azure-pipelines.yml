@@ -126,7 +126,6 @@ stages:
             # - download: current
             #   artifact: app
             #   displayName: artifact download app
-
             - task: AzureRmWebAppDeployment@4
               inputs:
                 ConnectionType: 'AzureRM'
@@ -134,5 +133,3 @@ stages:
                 appType: 'webApp'
                 WebAppName: 'pipelineDemo11'
                 packageForLinux: '$(Pipeline.Workspace)/app'
-
-        
