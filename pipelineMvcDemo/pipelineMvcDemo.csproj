@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+	<DebugType>Full</DebugType>
+	<ProjectGuid>{E3043A90-1E3C-4875-B1D7-7DDE421CA9FD}</ProjectGuid>
   </PropertyGroup>
 
 </Project>
