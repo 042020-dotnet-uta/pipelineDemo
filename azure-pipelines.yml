@@ -41,7 +41,7 @@ stages:
             zipAfterPublish: false
           displayName: dotnet publish
 
-#not sure what this is. I thknk it creates the artifact to be retrieved later
+# creates the artifact to be retrieved later
 #is there a template in the task manager for this?
         - publish: $(Build.ArtifactStagingDirectory)/app
           artifact: app
