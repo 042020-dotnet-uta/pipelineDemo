@@ -46,69 +46,45 @@ stages:
         - publish: $(Build.ArtifactStagingDirectory)/app
           artifact: app
           displayName: artifact publish app
+  
+  - stage: 
+    jobs:
+      - job: 'build'
+        pool: 
+          vmImage: 'ubuntu-latest'  
+        steps:
 
-#       - job: test
-#         pool:
-#           vmImage: ubuntu-latest
-
-#           steps:
-#           - task: UseDotNet@2
-#             inputs:
-#               packageType: sdk
-#               version: 3.1.x
-#             displayName: dotnet 3.1.x
+          - task: SonarCloudPrepare@1
+            inputs:
+              SonarCloud: 'pipelineDemo1'
+              organization: '042020-dotnet-uta'
+              scannerMode: 'MSBuild'
+              projectKey: '6ad11094b9f328712a3441dd2d6ae050aa1d2ad5'
+              projectName: 'pipelineDemo1'
+              extraProperties: |
+                sonar.exclusions=**/obj/**,**/*.dll
+                sonar.branch.name=$(Build.SourceBranchName)
+                sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+                sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
           
-#           - task: SonarCloudPrepare@1
-#             inputs:
-#               SonarCloud: 'pipelineDemo'
-#               organization: '042020-dotnet-uta'
-#               scannerMode: 'MSBuild'
-#               projectKey: '042020-dotnet-uta'#this name may not matter or it may need to be changed. 
+          - script: dotnet build $(solutionPath)
 
-#           - task: UseDotNet@2
-#             inputs:
-#               packageType: sdk
-#               version: $(sdkVersion)
-#             displayName: dotnet $(sdkVersion)
-
-# #add the path to the test project whn it's finished.
-#           - script: dotnet build
-#               --configuration $(buildConfiguration)
-#             workingDirectory: $(solutionPath)
-#             displayName: dotnet build
-
-# #add the path to the test project whn it's finished.
-#           - script: dotnet test
-#               --configuration $(buildConfiguration)
-#               --logger trx
-#               --no-build
-#               --results-directory $(Common.TestResultsDirectory)
-#               --settings coverlet.runsettings
-#             workingDirectory: $(solutionPath)
-#             continueOnError: true
-#             displayName: dotnet test
-
-#           - task: SonarCloudAnalyze@1
-#             displayName: sonarcloud analysis run
-
-#           - task: PublishTestResults@2
-#             condition: succeededOrFailed()
-#             inputs:
-#               testRunner: VSTest
-#               testResultsFiles: $(Common.TestResultsDirectory)/*.trx
-#             displayName: test results build publish
-
-#           - task: PublishCodeCoverageResults@1
-#             condition: succeededOrFailed()
-#             inputs:
-#               codeCoverageTool: Cobertura
-#               summaryFileLocation: $(Common.TestResultsDirectory)/*/coverage.cobertura.xml
-#             displayName: code coverage build publish
-
-#           - task: SonarCloudPublish@1
-#             condition: succeededOrFailed()
-#             displayName: sonarcloud results build publish
-
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet testing'
+            inputs:
+              command: 'test'
+              arguments: '--configuration $(BuildConfiguration)
+                /p:CollectCoverage=true
+                /p:CoverletOutputFormat=opencover
+                /p:Coverletoutput=$(Build.SourceDirector)/TestResults/Coverage
+                --logger trx'
+              projects: '**/*pipelineDemoTests1.csproj'
+              nobuild: true
+          - task: SonarCloudAnalyze@1
+          - task: SonarCloudPublish@1
+            inputs:
+              pollingTimeoutSec: '300'
+          - script: dotnet publish $(solutionPath)
 
   - stage: 'deploy'
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
