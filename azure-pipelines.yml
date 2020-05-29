@@ -76,7 +76,7 @@ stages:
               arguments: '--configuration $(BuildConfiguration)
                 /p:CollectCoverage=true
                 /p:CoverletOutputFormat=opencover
-                /p:Coverletoutput=$(Build.SourceDirector)/TestResults/Coverage
+                /p:Coverletoutput=$(Build.SourcesDirectory)/TestResults/Coverage
                 --logger trx'
               projects: '**/*pipelineDemoTests1.csproj'
               nobuild: true
